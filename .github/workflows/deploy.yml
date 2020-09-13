@@ -1,13 +1,9 @@
+name: Test
+on: [push, pull_request]
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - uses: kciter/aws-ecr-action@master
-      with:
-        access_key_id: ${{ secrets.ACCESS_KEY_ID_ENV_VAR_NAME }}
-        secret_access_key: ${{ secrets.SECRET_ACCESS_KEY_ENV_VAR_NAME }}
-        account_id: ${{ secrets.AWS_ACCOUNT_ID }}
-        repo: docker/repo
-        region: us-east-1
-        tags: latest,${{ github.sha }}
-        create_repo: true
+    - uses: actions/checkout@master
+    - name: Build the Docker image
+      run: docker build .
