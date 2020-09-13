@@ -1,11 +1,13 @@
-version: 2.1
-
-orbs:
-  aws-ecr: circleci/aws-ecr@x.y.z
-
-workflows:
-  simple_build_and_push:
-    jobs:
-      # with default parameter values, the following would be sufficient to build and push an image to ECR
-      - aws-ecr/build-and-push-image:
-          repo: myRepositoryName
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: kciter/aws-ecr-action@master
+      with:
+        access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+        repo: docker/repo
+        region: ap-northeast-2
+        tags: latest,${{ github.sha }}
+        create_repo: true
