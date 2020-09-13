@@ -6,7 +6,7 @@ orbs:
 workflows:
   complete_build_and_push:
     jobs:
-      # build and push image to ECR
+      # build and push image to ECR 
       - aws-ecr/build-and-push-image:
 
           # required if any necessary secrets are stored via Contexts
