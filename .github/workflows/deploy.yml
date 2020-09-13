@@ -10,10 +10,10 @@ workflows:
       - aws-ecr/build-and-push-image:
 
           # required if any necessary secrets are stored via Contexts
-          context: myContext
+          #context: myContext
 
           # AWS profile name, defaults to "default"
-          profile-name: myProfileName
+          profile-name: default #myProfileName
 
           # name of env var storing your AWS Access Key ID, defaults to AWS_ACCESS_KEY_ID
           aws-access-key-id: ACCESS_KEY_ID_ENV_VAR_NAME
