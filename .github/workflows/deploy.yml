@@ -42,7 +42,7 @@ jobs:
       run: |
         $( aws ecr get-login --no-include-email )
     - name: Tagging docker image
-      run: docker images; cd apache; docker tag mautic-docker:${{ github.sha }} $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
+      run: docker ps -a; docker images; cd apache; docker tag mautic-docker:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
     - name: Push to ECR
       if: github.ref == 'refs/heads/master'
       run: cd apache; docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
