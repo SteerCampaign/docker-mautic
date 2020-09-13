@@ -31,18 +31,18 @@ jobs:
         
     
     - name: Create MySQL Volume
-      run: docker volume create mysql_data
-    - name: Build the Docker image for MySQL
-      run: docker run --name percona -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mypassword -v mysql_data:/var/lib/mysql percona/percona-server:5.7 --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+      run: docker volume create mysql_data; docker run --name percona -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mypassword -v mysql_data:/var/lib/mysql percona/percona-server:5.7 --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+#    - name: Build the Docker image for MySQL
+#      run: docker run --name percona -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mypassword -v mysql_data:/var/lib/mysql percona/percona-server:5.7 --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
     - name: Create Mautic Volume
-      run: docker volume create mautic_data
-    - name: Build the Apache Docker image
-      run: cd apache; docker build -t mautic-docker .
+      run: docker volume create mautic_data; cd apache; docker build -t mautic-docker .
+#    - name: Build the Apache Docker image
+#      run: cd apache; docker build -t mautic-docker .
     - name: Setup ECR
       run: |
         $( aws ecr get-login --no-include-email )
     - name: Tagging docker image
-      run: cd apache; docker tag mautic-docker:${{ github.sha }} $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
+      run: docker images; cd apache; docker tag mautic-docker:${{ github.sha }} $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
     - name: Push to ECR
       if: github.ref == 'refs/heads/master'
       run: cd apache; docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
