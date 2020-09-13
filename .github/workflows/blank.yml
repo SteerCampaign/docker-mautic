@@ -1,0 +1,2 @@
+- name: AWS ECR
+  uses: kciter/aws-ecr-action@v1
