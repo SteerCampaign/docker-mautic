@@ -14,7 +14,7 @@ jobs:
     - name: cd
       run: cd apache
     - name: Build the Docker image
-      run: docker build .
+      run: docker build -t mautic-docker Dockerfile
       #docker build -d --restart=always -e MAUTIC_DB_HOST=127.0.0.1 -e MAUTIC_DB_USER=root -e MAUTIC_DB_PASSWORD=mypassword -e MAUTIC_DB_NAME=mautic -e MAUTIC_RUN_CRON_JOBS=true -e MAUTIC_TRUSTED_PROXIES=0.0.0.0/0 -p 8080:80 -v mautic_data:/var/www/html
     #- name: Build the Docker image
       #run: docker build .
