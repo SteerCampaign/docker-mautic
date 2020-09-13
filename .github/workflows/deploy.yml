@@ -15,19 +15,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Setup ECR
-      run: |
-        $( aws ecr get-login --no-include-email )
-    - name: Build and tag the image 
-      run: |
-        cd apache; docker build \
-          -t $CONTAINER_IMAGE \
-          -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./app
+#    - name: Setup ECR
+#      run: |
+#        $( aws ecr get-login --no-include-email )
+#    - name: Build and tag the image 
+#      run: |
+#        cd apache; docker build \
+#          -t $CONTAINER_IMAGE \
+#          -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./app
 
-    - name: Push
-      if: github.ref == 'refs/heads/master'
-      run: |
-        docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
+#    - name: Push
+#      if: github.ref == 'refs/heads/master'
+#      run: |
+#        docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
         
     
     - name: Create MySQL Volume
@@ -38,3 +38,13 @@ jobs:
       run: docker volume create mautic_data
     - name: Build the Apache Docker image
       run: cd apache; docker build -t mautic-docker .
+    - name: Setup ECR
+      run: |
+        $( aws ecr get-login --no-include-email )
+    - name: Tagging docker image
+      run: docker tag mautic-docker $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
+    - name: Push to ECR
+      if: github.ref == 'refs/heads/master'
+      run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
+      
+      
