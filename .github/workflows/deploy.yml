@@ -6,9 +6,12 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Build the Docker image
-      - run: 
-        - docker volume create mysql_data
-        - docker run --name percona -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mypassword -v mysql_data:/var/lib/mysql percona/percona-server:5.7 --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
-        - docker volume create mautic_data 
-        - docker build --name mautic -d --restart=always -e MAUTIC_DB_HOST=127.0.0.1 -e MAUTIC_DB_USER=root -e MAUTIC_DB_PASSWORD=mypassword -e MAUTIC_DB_NAME=mautic -e MAUTIC_RUN_CRON_JOBS=true -e MAUTIC_TRUSTED_PROXIES=0.0.0.0/0 -p 8080:80 -v mautic_data:/var/www/html
-        - docker build .
+      - run: docker volume create mysql_data
+    - name: Build the Docker image
+      - run: docker run --name percona -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mypassword -v mysql_data:/var/lib/mysql percona/percona-server:5.7 --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    - name: Build the Docker image
+      - run: docker volume create mautic_data 
+    - name: Build the Docker image
+      - run: docker build --name mautic -d --restart=always -e MAUTIC_DB_HOST=127.0.0.1 -e MAUTIC_DB_USER=root -e MAUTIC_DB_PASSWORD=mypassword -e MAUTIC_DB_NAME=mautic -e MAUTIC_RUN_CRON_JOBS=true -e MAUTIC_TRUSTED_PROXIES=0.0.0.0/0 -p 8080:80 -v mautic_data:/var/www/html
+    - name: Build the Docker image
+      - run: docker build .
