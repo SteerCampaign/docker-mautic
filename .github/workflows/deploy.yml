@@ -17,7 +17,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Create MySQL Volume and Image
       run: docker volume create mysql_data; docker run --name percona -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mypassword -v mysql_data:/var/lib/mysql percona/percona-server:5.7 --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
-    - name: Create Mautic Volume and Image
+    - name: Create Mautic Volume and Image 
       run: docker volume create mautic_data; cd apache; docker build -t mautic_docker_action .
     - name: Setup ECR
       run: |
