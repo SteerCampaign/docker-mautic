@@ -27,7 +27,7 @@ jobs:
     - name: Tag
       run: cd apache; docker tag mautic_docker_action 054748153214.dkr.ecr.us-east-1.amazonaws.com/example-container:1111
     - name: Tagging docker image
-      run: cd apache; docker push 054748153214.dkr.ecr.us-east-1.amazonaws.com/example-container:1111
+      run: cd apache; docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE #054748153214.dkr.ecr.us-east-1.amazonaws.com/example-container:1111
 #    - name: Push to ECR
 #      if: github.ref == 'refs/heads/master'
 #      run: cd apache; docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
