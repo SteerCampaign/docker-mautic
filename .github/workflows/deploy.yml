@@ -22,6 +22,8 @@ jobs:
     - name: Setup ECR
       run: |
         $( aws ecr get-login --no-include-email )
+    - name: Test
+      run: docker tag --help; docker push --help
 #    - name: Tagging docker image
 #      run: cd apache; docker tag mautic_docker_action $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
     - name: Push to ECR
