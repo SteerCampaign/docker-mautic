@@ -8,6 +8,7 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   CONTAINER_IMAGE: example-container:${{ github.sha }}
+  CONTAINER_IMAGE_LATEST: example-container:latest
   
   
 jobs:
@@ -29,12 +30,10 @@ jobs:
     - name: Tag the Image
       run: |
         cd apache
-        docker tag mautic_docker_action $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE 
-#054748153214.dkr.ecr.us-east-1.amazonaws.com/example-container:1111
-#    - name: Tagging docker image
-#      run: cd apache; docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE #054748153214.dkr.ecr.us-east-1.amazonaws.com/example-container:1111
+        docker tag mautic_docker_action:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
+        docker tag mautic_docker_action:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_LATEST
     - name: Push to ECR
       if: github.ref == 'refs/heads/master'
       run: |
         cd apache
-        docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
+        docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_LATEST
